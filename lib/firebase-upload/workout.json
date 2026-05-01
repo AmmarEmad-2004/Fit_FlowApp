@@ -1,0 +1,438 @@
+{
+  "muscle": {
+    "2_days": [
+      {
+        "day": "Upper Body",
+        "time": 65,
+        "exercises": [
+          {"name": "Barbell Bench Press", "desc": "Chest & Triceps", "reps": "4x8-12", "time": 12},
+          {"name": "Pull Ups", "desc": "Back & Biceps", "reps": "4x6-10", "time": 10},
+          {"name": "Seated Dumbbell Shoulder Press", "desc": "Shoulders", "reps": "3x8-12", "time": 8},
+          {"name": "Incline Dumbbell Press", "desc": "Upper Chest", "reps": "3x8-12", "time": 8},
+          {"name": "Barbell Curl", "desc": "Biceps", "reps": "3x10-12", "time": 6},
+          {"name": "Tricep Rope Pushdown", "desc": "Triceps", "reps": "3x10-12", "time": 6}
+        ]
+      },
+      {
+        "day": "Lower Body",
+        "time": 65,
+        "exercises": [
+          {"name": "Barbell Squat", "desc": "Quads & Glutes", "reps": "4x8-12", "time": 12},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings & Glutes", "reps": "3x8-12", "time": 10},
+          {"name": "Leg Press", "desc": "Quads", "reps": "3x10-12", "time": 8},
+          {"name": "Leg Curl", "desc": "Hamstrings", "reps": "3x10-12", "time": 8},
+          {"name": "Standing Calf Raises", "desc": "Calves", "reps": "4x12-15", "time": 6},
+          {"name": "Plank", "desc": "Core", "reps": "3x30-45s", "time": 6}
+        ]
+      }
+    ],
+
+    "3_days": [
+      {
+        "day": "Push",
+        "time": 65,
+        "exercises": [
+          {"name": "Barbell Bench Press", "desc": "Chest & Triceps", "reps": "4x8-12", "time": 12},
+          {"name": "Incline Dumbbell Press", "desc": "Upper Chest", "reps": "3x8-12", "time": 8},
+          {"name": "Seated Shoulder Press", "desc": "Shoulders", "reps": "3x8-12", "time": 8},
+          {"name": "Lateral Raises", "desc": "Side Delts", "reps": "3x12-15", "time": 6},
+          {"name": "Tricep Pushdown", "desc": "Triceps", "reps": "3x10-12", "time": 6}
+        ]
+      },
+      {
+        "day": "Pull",
+        "time": 65,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Full Back & Posterior Chain", "reps": "4x5-8", "time": 12},
+          {"name": "Pull Ups", "desc": "Lats & Biceps", "reps": "4x6-10", "time": 10},
+          {"name": "Barbell Row", "desc": "Mid Back", "reps": "3x8-12", "time": 8},
+          {"name": "Face Pull", "desc": "Rear Delts", "reps": "3x12-15", "time": 6},
+          {"name": "Barbell Curl", "desc": "Biceps", "reps": "3x10-12", "time": 6}
+        ]
+      },
+      {
+        "day": "Legs",
+        "time": 65,
+        "exercises": [
+          {"name": "Barbell Squat", "desc": "Quads & Glutes", "reps": "4x8-12", "time": 12},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings", "reps": "3x8-12", "time": 10},
+          {"name": "Leg Extension", "desc": "Quads", "reps": "3x12", "time": 8},
+          {"name": "Leg Curl", "desc": "Hamstrings", "reps": "3x12", "time": 8},
+          {"name": "Calf Raises", "desc": "Calves", "reps": "4x12-15", "time": 6}
+        ]
+      }
+    ],
+
+    "4_days": [
+      {
+        "day": "Chest & Triceps",
+        "time": 65,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Chest", "reps": "4x8-12", "time": 12},
+          {"name": "Incline Dumbbell Press", "desc": "Upper Chest", "reps": "3x8-12", "time": 8},
+          {"name": "Cable Fly", "desc": "Chest Isolation", "reps": "3x12", "time": 6},
+          {"name": "Tricep Dips", "desc": "Triceps", "reps": "3x10-12", "time": 6},
+          {"name": "Overhead Tricep Extension", "desc": "Triceps", "reps": "3x10-12", "time": 6}
+        ]
+      },
+      {
+        "day": "Back & Biceps",
+        "time": 65,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Back", "reps": "4x5-8", "time": 12},
+          {"name": "Pull Ups", "desc": "Lats", "reps": "4x6-10", "time": 10},
+          {"name": "Seated Row", "desc": "Mid Back", "reps": "3x8-12", "time": 8},
+          {"name": "Barbell Curl", "desc": "Biceps", "reps": "3x10-12", "time": 6},
+          {"name": "Hammer Curl", "desc": "Biceps", "reps": "3x10", "time": 6}
+        ]
+      },
+      {
+        "day": "Legs",
+        "time": 65,
+        "exercises": [
+          {"name": "Squat", "desc": "Quads & Glutes", "reps": "4x8-12", "time": 12},
+          {"name": "Leg Press", "desc": "Quads", "reps": "3x10-12", "time": 8},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings", "reps": "3x8-12", "time": 10},
+          {"name": "Calf Raises", "desc": "Calves", "reps": "4x12-15", "time": 6}
+        ]
+      },
+      {
+        "day": "Shoulders & Core",
+        "time": 60,
+        "exercises": [
+          {"name": "Shoulder Press", "desc": "Shoulders", "reps": "4x8-12", "time": 10},
+          {"name": "Lateral Raises", "desc": "Side Delts", "reps": "3x12-15", "time": 6},
+          {"name": "Rear Delt Fly", "desc": "Rear Delts", "reps": "3x12-15", "time": 6},
+          {"name": "Shrugs", "desc": "Traps", "reps": "3x12", "time": 6},
+          {"name": "Hanging Leg Raises", "desc": "Core", "reps": "3x12", "time": 6}
+        ]
+      }
+    ],
+
+    "5_days": [
+      {
+        "day": "Chest",
+        "time": 60,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Chest", "reps": "4x8-12", "time": 12},
+          {"name": "Incline Press", "desc": "Upper Chest", "reps": "3x8-12", "time": 8},
+          {"name": "Cable Fly", "desc": "Chest Isolation", "reps": "3x12", "time": 6}
+        ]
+      },
+      {
+        "day": "Back",
+        "time": 60,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Back", "reps": "4x5-8", "time": 12},
+          {"name": "Pull Ups", "desc": "Lats", "reps": "4x6-10", "time": 10},
+          {"name": "Row", "desc": "Mid Back", "reps": "3x8-12", "time": 8}
+        ]
+      },
+      {
+        "day": "Legs",
+        "time": 65,
+        "exercises": [
+          {"name": "Squat", "desc": "Quads", "reps": "4x8-12", "time": 12},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings", "reps": "3x8-12", "time": 10}
+        ]
+      },
+      {
+        "day": "Shoulders",
+        "time": 55,
+        "exercises": [
+          {"name": "Shoulder Press", "desc": "Shoulders", "reps": "4x8-12", "time": 10},
+          {"name": "Lateral Raise", "desc": "Side Delts", "reps": "3x12", "time": 6}
+        ]
+      },
+      {
+        "day": "Arms",
+        "time": 55,
+        "exercises": [
+          {"name": "Barbell Curl", "desc": "Biceps", "reps": "3x10-12", "time": 6},
+          {"name": "Tricep Pushdown", "desc": "Triceps", "reps": "3x10-12", "time": 6}
+        ]
+      }
+    ]
+  },
+
+  "strong": {
+    "2_days": [
+      {
+        "day": "Full Body A",
+        "time": 75,
+        "exercises": [
+          {"name": "Back Squat", "desc": "Primary Squat Strength (Heavy)", "reps": "5x5 @75-80%", "time": 18},
+          {"name": "Bench Press", "desc": "Primary Bench Strength (Volume)", "reps": "5x5 @70-75%", "time": 15},
+          {"name": "Barbell Row", "desc": "Upper Back Support", "reps": "4x6-8", "time": 10},
+          {"name": "Plank", "desc": "Core Stability", "reps": "3x45-60s", "time": 6}
+        ]
+      },
+      {
+        "day": "Full Body B",
+        "time": 75,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Primary Deadlift Strength (Heavy)", "reps": "4x4 @80-85%", "time": 18},
+          {"name": "Overhead Press", "desc": "Shoulder Strength", "reps": "5x5", "time": 12},
+          {"name": "Pull Ups", "desc": "Lats & Grip Strength", "reps": "4x6-8", "time": 10},
+          {"name": "Hanging Leg Raises", "desc": "Core", "reps": "3x12", "time": 6}
+        ]
+      }
+    ],
+
+    "3_days": [
+      {
+        "day": "Squat Focus",
+        "time": 80,
+        "exercises": [
+          {"name": "Back Squat", "desc": "Heavy Squat Day", "reps": "5x5 @75-85%", "time": 20},
+          {"name": "Paused Squat", "desc": "Technique & Depth Control", "reps": "3x3 @65%", "time": 10},
+          {"name": "Leg Press", "desc": "Quad Volume", "reps": "3x8-10", "time": 10},
+          {"name": "Calf Raises", "desc": "Calves", "reps": "4x12-15", "time": 6}
+        ]
+      },
+      {
+        "day": "Bench Focus",
+        "time": 80,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Heavy Bench Day", "reps": "5x5 @75-85%", "time": 18},
+          {"name": "Close Grip Bench Press", "desc": "Triceps Strength", "reps": "4x6", "time": 12},
+          {"name": "Incline Dumbbell Press", "desc": "Upper Chest", "reps": "3x8-10", "time": 10},
+          {"name": "Tricep Pushdown", "desc": "Triceps Volume", "reps": "3x12", "time": 6}
+        ]
+      },
+      {
+        "day": "Deadlift Focus",
+        "time": 80,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Heavy Deadlift Day", "reps": "4x4 @80-85%", "time": 18},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings Strength", "reps": "3x6-8", "time": 10},
+          {"name": "Barbell Row", "desc": "Back Thickness", "reps": "4x6-8", "time": 10},
+          {"name": "Face Pull", "desc": "Rear Delts & Stability", "reps": "3x12-15", "time": 6}
+        ]
+      }
+    ],
+
+    "4_days": [
+      {
+        "day": "Lower (Squat Heavy)",
+        "time": 85,
+        "exercises": [
+          {"name": "Back Squat", "desc": "Heavy Strength", "reps": "5x5 @80-85%", "time": 20},
+          {"name": "Front Squat", "desc": "Quad Strength", "reps": "3x5", "time": 12},
+          {"name": "Leg Curl", "desc": "Hamstrings", "reps": "3x10", "time": 8}
+        ]
+      },
+      {
+        "day": "Upper (Bench Heavy)",
+        "time": 80,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Heavy Strength", "reps": "5x5 @80-85%", "time": 18},
+          {"name": "Overhead Press", "desc": "Shoulders", "reps": "4x6", "time": 12},
+          {"name": "Pull Ups", "desc": "Back", "reps": "4x6-8", "time": 10}
+        ]
+      },
+      {
+        "day": "Lower (Deadlift)",
+        "time": 85,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Heavy Strength", "reps": "4x4 @80-90%", "time": 20},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings", "reps": "3x6-8", "time": 10},
+          {"name": "Calf Raises", "desc": "Calves", "reps": "4x12", "time": 6}
+        ]
+      },
+      {
+        "day": "Upper (Volume)",
+        "time": 75,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Volume Work", "reps": "4x8 @65-70%", "time": 15},
+          {"name": "Barbell Row", "desc": "Back", "reps": "4x8", "time": 10},
+          {"name": "Face Pull", "desc": "Shoulder Health", "reps": "3x15", "time": 6}
+        ]
+      }
+    ],
+
+    "5_days": [
+      {
+        "day": "Squat Heavy",
+        "time": 85,
+        "exercises": [
+          {"name": "Back Squat", "desc": "Heavy Strength", "reps": "5x3 @85-90%", "time": 20},
+          {"name": "Paused Squat", "desc": "Control & Stability", "reps": "3x3", "time": 10}
+        ]
+      },
+      {
+        "day": "Bench Heavy",
+        "time": 80,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Heavy Strength", "reps": "5x3 @85-90%", "time": 18},
+          {"name": "Close Grip Bench", "desc": "Triceps", "reps": "4x6", "time": 12}
+        ]
+      },
+      {
+        "day": "Deadlift Heavy",
+        "time": 85,
+        "exercises": [
+          {"name": "Deadlift", "desc": "Heavy Strength", "reps": "4x3 @85-90%", "time": 20},
+          {"name": "Romanian Deadlift", "desc": "Hamstrings", "reps": "3x6", "time": 10}
+        ]
+      },
+      {
+        "day": "Upper Volume",
+        "time": 75,
+        "exercises": [
+          {"name": "Bench Press", "desc": "Volume Work", "reps": "4x8", "time": 15},
+          {"name": "Pull Ups", "desc": "Back", "reps": "4x8", "time": 10}
+        ]
+      },
+      {
+        "day": "Accessory & Core",
+        "time": 70,
+        "exercises": [
+          {"name": "Barbell Row", "desc": "Back Strength", "reps": "4x8", "time": 10},
+          {"name": "Face Pull", "desc": "Shoulder Health", "reps": "3x15", "time": 6},
+          {"name": "Plank", "desc": "Core", "reps": "3x60s", "time": 6}
+        ]
+      }
+    ]
+  },
+
+  "general": {
+    "2_days": [
+      {
+        "day": "Full Body + Cardio",
+        "time": 50,
+        "exercises": [
+          {"name": "Bodyweight Squat", "desc": "Legs & Glutes", "reps": "3x15", "time": 6},
+          {"name": "Push Ups", "desc": "Chest & Arms", "reps": "3x12", "time": 6},
+          {"name": "Jump Rope", "desc": "Cardio Endurance", "reps": "8-10 min", "time": 10},
+          {"name": "Plank", "desc": "Core Stability", "reps": "3x30-45s", "time": 5},
+          {"name": "Stretching", "desc": "Full Body Mobility", "reps": "5-7 min", "time": 7}
+        ]
+      },
+      {
+        "day": "Upper + Core",
+        "time": 45,
+        "exercises": [
+          {"name": "Pull Ups", "desc": "Back & Biceps", "reps": "3x6-8", "time": 6},
+          {"name": "Dumbbell Shoulder Press", "desc": "Shoulders", "reps": "3x10", "time": 6},
+          {"name": "Sit Ups", "desc": "Core", "reps": "3x15", "time": 5},
+          {"name": "Mountain Climbers", "desc": "Cardio & Core", "reps": "3x30s", "time": 5},
+          {"name": "Stretching", "desc": "Mobility", "reps": "5 min", "time": 5}
+        ]
+      }
+    ],
+
+    "3_days": [
+      {
+        "day": "Full Body",
+        "time": 50,
+        "exercises": [
+          {"name": "Squat", "desc": "Legs", "reps": "3x12", "time": 6},
+          {"name": "Push Ups", "desc": "Chest", "reps": "3x12", "time": 6},
+          {"name": "Pull Ups", "desc": "Back", "reps": "3x6", "time": 6},
+          {"name": "Plank", "desc": "Core", "reps": "3x30s", "time": 5}
+        ]
+      },
+      {
+        "day": "Cardio Focus",
+        "time": 45,
+        "exercises": [
+          {"name": "Running", "desc": "Cardio Endurance", "reps": "15-20 min", "time": 20},
+          {"name": "Jump Rope", "desc": "Cardio", "reps": "5-7 min", "time": 7},
+          {"name": "Burpees", "desc": "Full Body Cardio", "reps": "3x10", "time": 6}
+        ]
+      },
+      {
+        "day": "Upper + Core",
+        "time": 45,
+        "exercises": [
+          {"name": "Dumbbell Press", "desc": "Chest", "reps": "3x10", "time": 6},
+          {"name": "Dumbbell Row", "desc": "Back", "reps": "3x10", "time": 6},
+          {"name": "Sit Ups", "desc": "Core", "reps": "3x15", "time": 5},
+          {"name": "Plank", "desc": "Core", "reps": "3x45s", "time": 5}
+        ]
+      }
+    ],
+
+    "4_days": [
+      {
+        "day": "Upper Body",
+        "time": 50,
+        "exercises": [
+          {"name": "Push Ups", "desc": "Chest", "reps": "3x12", "time": 6},
+          {"name": "Pull Ups", "desc": "Back", "reps": "3x6", "time": 6},
+          {"name": "Shoulder Press", "desc": "Shoulders", "reps": "3x10", "time": 6}
+        ]
+      },
+      {
+        "day": "Lower Body",
+        "time": 50,
+        "exercises": [
+          {"name": "Squat", "desc": "Legs", "reps": "3x12", "time": 6},
+          {"name": "Lunges", "desc": "Legs", "reps": "3x10", "time": 6},
+          {"name": "Calf Raises", "desc": "Calves", "reps": "3x15", "time": 5}
+        ]
+      },
+      {
+        "day": "Cardio",
+        "time": 45,
+        "exercises": [
+          {"name": "Running", "desc": "Cardio", "reps": "15 min", "time": 15},
+          {"name": "Jump Rope", "desc": "Cardio", "reps": "5 min", "time": 5},
+          {"name": "Burpees", "desc": "Full Body", "reps": "3x10", "time": 6}
+        ]
+      },
+      {
+        "day": "Core & Mobility",
+        "time": 40,
+        "exercises": [
+          {"name": "Plank", "desc": "Core", "reps": "3x45s", "time": 5},
+          {"name": "Sit Ups", "desc": "Core", "reps": "3x15", "time": 5},
+          {"name": "Stretching", "desc": "Mobility", "reps": "10 min", "time": 10}
+        ]
+      }
+    ],
+
+    "5_days": [
+      {
+        "day": "Upper Body",
+        "time": 50,
+        "exercises": [
+          {"name": "Push Ups", "desc": "Chest", "reps": "3x12", "time": 6},
+          {"name": "Pull Ups", "desc": "Back", "reps": "3x6", "time": 6}
+        ]
+      },
+      {
+        "day": "Lower Body",
+        "time": 50,
+        "exercises": [
+          {"name": "Squat", "desc": "Legs", "reps": "3x12", "time": 6},
+          {"name": "Lunges", "desc": "Legs", "reps": "3x10", "time": 6}
+        ]
+      },
+      {
+        "day": "Cardio",
+        "time": 45,
+        "exercises": [
+          {"name": "Running", "desc": "Endurance", "reps": "20 min", "time": 20}
+        ]
+      },
+      {
+        "day": "Core",
+        "time": 40,
+        "exercises": [
+          {"name": "Plank", "desc": "Core", "reps": "3x45s", "time": 5},
+          {"name": "Mountain Climbers", "desc": "Core & Cardio", "reps": "3x30s", "time": 5}
+        ]
+      },
+      {
+        "day": "Full Body Light",
+        "time": 45,
+        "exercises": [
+          {"name": "Burpees", "desc": "Full Body", "reps": "3x10", "time": 6},
+          {"name": "Jump Rope", "desc": "Cardio", "reps": "5 min", "time": 5}
+        ]
+      }
+    ]
+  }
+}
