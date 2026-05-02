@@ -13,14 +13,14 @@ class HomePresenter {
   Future<HomeState> loadProgram() async {
     try {
       final program = await _repo.getProgram();
-      
+
       if (program.trainingDays.isEmpty) {
         throw Exception(
           'No training days found in Firestore.\n'
           'Make sure you uploaded data with: node firebase-upload/index.js',
         );
       }
-      
+
       return HomeSuccess(program: program);
     } catch (e) {
       final errorMsg = e.toString().replaceAll('Exception: ', '');
