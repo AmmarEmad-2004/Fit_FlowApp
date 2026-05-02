@@ -82,16 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildContent(BuildContext context, HomeSuccess state) {
-    final cubit = context.read<HomeCubit>();
-    final currentDay = HomeUtils.getCurrentDay(
-      state.program,
-      state.selectedDayIndex,
-    );
-    final plan = HomeUtils.getCurrentPlan(
-      state.program,
-      state.selectedDayIndex,
-    );
-    final labels = HomeUtils.getDayLabels(state.program);
+    
 
     return Column(
       children: [
