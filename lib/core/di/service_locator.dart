@@ -34,7 +34,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<HomeRepo>(
     () => HomeRepoImpl(getIt<HomeService>()),
   );
-  getIt.registerFactory<HomeController>(() => HomeController(getIt<HomeRepo>()));
+  getIt.registerFactory<HomeController>(
+    () => HomeController(getIt<HomeRepo>()),
+  );
 
   getIt.registerLazySingleton<AppRouter>(AppRouter.new);
 }
