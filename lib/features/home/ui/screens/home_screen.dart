@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../logic/home_cubit.dart';
 import '../logic/home_state.dart';
+import '../logic/home_utils.dart';
 import 'widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,13 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<HomeCubit>().load();
-  }
-
-  /// Abbreviate a day name to 3 uppercase letters of the first word.
-  /// "Upper Body" → "UPP", "Push" → "PUS", "Squat Focus" → "SQU"
-  static String _abbrev(String dayName) {
-    final word = dayName.split(' ').first;
-    return word.substring(0, word.length.clamp(0, 3)).toUpperCase();
   }
 
   @override
@@ -90,10 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildContent(BuildContext context, HomeSuccess state) {
     final cubit = context.read<HomeCubit>();
-    final trainingDays = state.program.trainingDays;
-    final currentDay = state.currentDay;
-    final plan = state.currentPlan;
-    final labels = trainingDays.map((d) => _abbrev(d.day)).toList();
+    final currentDay = HomeUtils.getCurrentDay(state.program, state.selectedDayIndex);
+    final plan = HomeUtils.getCurrentPlan(state.program, state.selectedDayIndex);
+    final labels = HomeUtils.getDayLabels(state.program);
 
     return Column(
       children: [
