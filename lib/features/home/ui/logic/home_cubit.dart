@@ -1,47 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/repos/home_repo.dart';
+import 'home_presenter.dart';
 import 'home_state.dart';
 
+/// Thin BLoC wrapper around HomePresenter
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this._repo) : super(const HomeInitial());
+  HomeCubit(HomeRepo repo)
+      : _presenter = HomePresenter(repo),
+        super(const HomeInitial());
 
-  final HomeRepo _repo;
+  final HomePresenter _presenter;
 
-  // ── Load ────────────────────────────────────────────────────────────────────
-
+  /// Load program from repo via presenter
   Future<void> load() async {
     emit(const HomeLoading());
-    try {
-      final program = await _repo.getProgram();
-      if (program.trainingDays.isEmpty) {
-        throw Exception(
-          'No training days found in Firestore.\n'
-          'Make sure you uploaded data with: node lib/firebase-upload/index.js',
-        );
-      }
-      emit(HomeSuccess(program: program));
-    } catch (e, st) {
-      // ignore: avoid_print
-      print('HomeCubit.load() error:\n$e\n$st');
-      emit(HomeFailure(
-        message: 'Error: ${e.toString().replaceAll('Exception: ', '')}',
-      ));
+    final newState = await _presenter.loadProgram();
+    emit(newState);
+  }
+
+  /// Select training day
+  void selectDay(int index) {
+    final s = state;
+    if (s is HomeSuccess) {
+      emit(_presenter.selectDay(s, index));
     }
   }
 
-  // ── Select training day ─────────────────────────────────────────────────────
-
-  /// [index] maps directly to [WorkoutProgramModel.trainingDays] — no conversion.
-  void selectDay(int index) {
-    final s = state;
-    if (s is HomeSuccess) emit(s.copyWith(selectedDayIndex: index));
-  }
-
-  // ── Select bottom-nav tab ───────────────────────────────────────────────────
-
+  /// Select bottom-nav tab
   void selectTab(int index) {
     final s = state;
-    if (s is HomeSuccess) emit(s.copyWith(selectedTabIndex: index));
+    if (s is HomeSuccess) {
+      emit(_presenter.selectTab(s, index));
+    }
   }
 }
