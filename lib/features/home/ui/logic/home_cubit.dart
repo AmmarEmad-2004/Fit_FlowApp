@@ -7,8 +7,8 @@ import 'home_state.dart';
 /// Thin BLoC wrapper around HomePresenter
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(HomeRepo repo)
-      : _presenter = HomePresenter(repo),
-        super(const HomeInitial());
+    : _presenter = HomePresenter(repo),
+      super(const HomeInitial());
 
   final HomePresenter _presenter;
 
