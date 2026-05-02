@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // ── Bottom Nav ────────────────────────────────────────────────
         HomeBottomNav(
           currentIndex: state.selectedTabIndex,
-          onTap: cubit.selectTab,
+          onTap: ,
         ),
       ],
     );
