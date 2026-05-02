@@ -1,8 +1,6 @@
-import '../../data/models/training_day_model.dart';
-import '../../data/models/workout_plan_model.dart';
 import '../../data/models/workout_program_model.dart';
 
-/// Sealed states — no flat copyWith pattern.
+/// Sealed states — pure data containers
 sealed class HomeState {
   const HomeState();
 }
@@ -25,17 +23,6 @@ class HomeSuccess extends HomeState {
   final WorkoutProgramModel program;
   final int selectedDayIndex;
   final int selectedTabIndex;
-
-  /// The currently selected training day
-  TrainingDayModel get currentDay => program.trainingDays[selectedDayIndex];
-
-  /// A WorkoutPlanModel computed from the selected day — used by PlanCard
-  WorkoutPlanModel get currentPlan => WorkoutPlanModel(
-        label: program.programType.toUpperCase(),
-        title: currentDay.day,
-        duration: '${currentDay.time} min',
-        exerciseCount: '${currentDay.exercises.length} exercises',
-      );
 
   HomeSuccess copyWith({int? selectedDayIndex, int? selectedTabIndex}) {
     return HomeSuccess(
