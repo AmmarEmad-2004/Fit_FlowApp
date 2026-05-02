@@ -28,51 +28,50 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) => switch (state) {
             // ── Loading ────────────────────────────────────────────────────
-            HomeInitial() || HomeLoading() => const Center(
-                child: CircularProgressIndicator(),
-              ),
+            HomeInitial() ||
+            HomeLoading() => const Center(child: CircularProgressIndicator()),
 
             // ── Failure ────────────────────────────────────────────────────
             HomeFailure(:final message) => Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.cloud_off_rounded,
-                        size: 64,
-                        color: Color(0xFFD1D5DB),
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.cloud_off_rounded,
+                      size: 64,
+                      color: Color(0xFFD1D5DB),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      message,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xFF6B7280),
+                        fontSize: 15,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        message,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Color(0xFF6B7280),
-                          fontSize: 15,
+                    ),
+                    const SizedBox(height: 24),
+                    FilledButton.icon(
+                      onPressed: () => context.read<HomeCubit>().load(),
+                      icon: const Icon(Icons.refresh_rounded),
+                      label: const Text('Try Again'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color(0xFF2F6CF6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 14,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      FilledButton.icon(
-                        onPressed: () => context.read<HomeCubit>().load(),
-                        icon: const Icon(Icons.refresh_rounded),
-                        label: const Text('Try Again'),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: const Color(0xFF2F6CF6),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 14,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
+            ),
 
             // ── Success ────────────────────────────────────────────────────
             HomeSuccess() => _buildContent(context, state),
@@ -84,8 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildContent(BuildContext context, HomeSuccess state) {
     final cubit = context.read<HomeCubit>();
-    final currentDay = HomeUtils.getCurrentDay(state.program, state.selectedDayIndex);
-    final plan = HomeUtils.getCurrentPlan(state.program, state.selectedDayIndex);
+    final currentDay = HomeUtils.getCurrentDay(
+      state.program,
+      state.selectedDayIndex,
+    );
+    final plan = HomeUtils.getCurrentPlan(
+      state.program,
+      state.selectedDayIndex,
+    );
     final labels = HomeUtils.getDayLabels(state.program);
 
     return Column(
@@ -106,10 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Text(
                     'Weekly Blueprint',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Text(
                     '${state.program.daysPerWeek} Days / Week',

@@ -1,8 +1,9 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../di/service_locator.dart';
-import '../../features/home/ui/logic/home_cubit.dart';
+import '../../features/home/ui/logic/home_controller.dart';
 import '../../features/home/ui/screens/home_screen.dart';
 import '../../features/onboarding/ui/logic/onboarding_cubit.dart';
 import '../../features/onboarding/ui/screens/onboarding_screen.dart';
@@ -24,8 +25,8 @@ class AppRouter {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<HomeCubit>()..load(),
+        builder: (context, state) => ChangeNotifierProvider(
+          create: (context) => getIt<HomeController>()..load(),
           child: const HomeScreen(),
         ),
       ),
