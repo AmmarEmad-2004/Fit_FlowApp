@@ -13,15 +13,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<OnboardingCubit, OnboardingState>(
-          builder: (context, state) {
-            if (state.isLoading || state.model == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-            final model = state.model!;
-
-            return Padding(
+        child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,9 +47,7 @@ class OnboardingScreen extends StatelessWidget {
                           return OnboardingGoalCard(
                             goal: goal,
                             selected: selected,
-                            onTap: () => context
-                                .read<OnboardingCubit>()
-                                .selectGoal(goal.id),
+                            onTap: () {}
                           );
                         }
 
