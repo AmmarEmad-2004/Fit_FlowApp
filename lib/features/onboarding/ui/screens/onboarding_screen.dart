@@ -47,7 +47,9 @@ class OnboardingScreen extends StatelessWidget {
                           return OnboardingGoalCard(
                             goal: goal,
                             selected: selected,
-                            onTap: () {}
+                            onTap: () => context
+                                .read<OnboardingCubit>()
+                                .selectGoal(goal.id),
                           );
                         }
 
