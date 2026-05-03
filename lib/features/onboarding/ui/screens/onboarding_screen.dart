@@ -88,12 +88,7 @@ class OnboardingScreen extends StatelessWidget {
                   PrimaryActionButton(
                     label: 'Continue',
                     onPressed: () async {
-                      await context
-                          .read<OnboardingCubit>()
-                          .completeOnboarding();
-                      if (context.mounted) {
-                        context.go('/home');
-                      }
+                     
                     },
                   ),
                 ],
