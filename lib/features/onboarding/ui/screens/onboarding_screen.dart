@@ -13,10 +13,13 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-          child: BlocBuilder<OnboardingCubit, OnboardingState>(
-            builder: (context, state) {
+        child: BlocConsumer<OnboardingCubit, OnboardingState>(
+          listener: (context, state) {
+            if (state.isComplete) {
+              context.go('/home');
+            }
+          },
+          builder: (context, state) {
             if (state.isLoading || state.model == null) {
               return const Center(child: CircularProgressIndicator());
             }
