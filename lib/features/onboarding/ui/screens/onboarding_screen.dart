@@ -96,7 +96,7 @@ class OnboardingScreen extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
+      )
+    
   }
 }
