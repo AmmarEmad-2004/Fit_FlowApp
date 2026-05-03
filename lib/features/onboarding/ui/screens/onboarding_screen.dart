@@ -13,7 +13,14 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: (context, state) {
+            if (state.isLoading || state.model == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final model = state.model!;
+
+            return Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
