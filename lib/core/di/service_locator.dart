@@ -5,7 +5,7 @@ import '../../core/services/user_selection_service.dart';
 import '../../features/home/data/repos/home_repo.dart';
 import '../../features/home/data/repos/home_repo_impl.dart';
 import '../../features/home/data/services/home_service.dart';
-import '../../features/home/ui/logic/home_controller.dart';
+import '../../features/home/ui/logic/home_cubit.dart';
 import '../../features/onboarding/data/repos/onboarding_repo.dart';
 import '../../features/onboarding/data/repos/onboarding_repo_impl.dart';
 import '../../features/onboarding/data/services/onboarding_service.dart';
@@ -34,8 +34,8 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<HomeRepo>(
     () => HomeRepoImpl(getIt<HomeService>()),
   );
-  getIt.registerFactory<HomeController>(
-    () => HomeController(getIt<HomeRepo>()),
+  getIt.registerFactory<HomeCubit>(
+    () => HomeCubit(getIt<HomeRepo>()),
   );
 
   getIt.registerLazySingleton<AppRouter>(AppRouter.new);
