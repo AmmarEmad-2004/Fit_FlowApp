@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/workout_plan_model.dart';
 import '../logic/home_cubit.dart';
 import '../logic/home_state.dart';
-import '../logic/home_utils.dart';
 import 'widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -82,7 +82,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildContent(BuildContext context, HomeSuccess state) {
+    final cubit = context.read<HomeCubit>();
+    final labels = state.program.trainingDays.map((d) => d.day).toList();
+    final currentDay = state.program.trainingDays[state.selectedDayIndex];
     
+    final plan = WorkoutPlanModel(
+      label: 'PROGRAM',
+      title: state.program.programType,
+      duration: '${currentDay.time} min',
+      exerciseCount: '${currentDay.exercises.length} exercises',
+    );
 
     return Column(
       children: [
