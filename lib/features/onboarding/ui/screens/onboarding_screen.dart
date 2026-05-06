@@ -80,7 +80,9 @@ class OnboardingScreen extends StatelessWidget {
                                 options: model.availabilityOptions,
                                 selectedOption: state.selectedAvailability,
                                 onSelect:(){
-                                  
+                                  context
+                                    .read<OnboardingCubit>()
+                                    .selectAvailability(opt);
                                 },
                               ),
                               const SizedBox(height: 14),
