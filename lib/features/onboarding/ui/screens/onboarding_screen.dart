@@ -79,7 +79,7 @@ class OnboardingScreen extends StatelessWidget {
                               AvailabilitySelector(
                                 options: model.availabilityOptions,
                                 selectedOption: state.selectedAvailability,
-                                onSelect: 
+                                onSelect: ()
                               ),
                               const SizedBox(height: 14),
                               RecommendedCard(
