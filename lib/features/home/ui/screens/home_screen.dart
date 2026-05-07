@@ -15,12 +15,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-    context.read<HomeCubit>().load();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -82,6 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildContent(BuildContext context, HomeSuccess state) {
+    final cubit = context.read<HomeCubit>();
+    if (state.program.trainingDays.isEmpty) {
+      return const Center(
+        child: Text(
+          'No training days available yet.',
+          style: TextStyle(color: Color(0xFF6B7280)),
+        ),
+      );
+    }
+    final labels = HomeUtils.dayLabels(state.program.trainingDays);
+    final maxIndex = state.program.trainingDays.length - 1;
+    final safeIndex = state.selectedDayIndex.clamp(0, maxIndex).toInt();
+    final currentDay = state.program.trainingDays[safeIndex];
+    final plan = HomeUtils.planForDay(currentDay);
+
     return Column(
       children: [
         Expanded(
@@ -117,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // ── Training day selector ─────────────────────────────────
               WeekSelector(
                 labels: labels,
-                selectedIndex: state.selectedDayIndex,
+                selectedIndex: safeIndex,
                 onSelect: cubit.selectDay,
               ),
               const SizedBox(height: 14),
