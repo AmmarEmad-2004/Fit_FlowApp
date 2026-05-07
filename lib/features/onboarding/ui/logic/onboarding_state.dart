@@ -1,41 +1,28 @@
-import 'package:equatable/equatable.dart';
+part of 'onboarding_cubit.dart';
 
-import '../../data/models/onboarding_model.dart';
+@immutable
+sealed class OnboardingState {}
 
-sealed class OnboardingState extends Equatable {
-  const OnboardingState();
+final class OnboardingInitial extends OnboardingState {}
 
-  @override
-  List<Object?> get props => [];
-}
+final class OnboardingLoading extends OnboardingState {}
 
-class OnboardingInitial extends OnboardingState {
-  const OnboardingInitial();
-}
-
-class OnboardingLoading extends OnboardingState {
-  const OnboardingLoading();
-}
-
-class OnboardingFailure extends OnboardingState {
-  const OnboardingFailure(this.message);
-
+final class OnboardingFailure extends OnboardingState {
   final String message;
 
-  @override
-  List<Object?> get props => [message];
+  OnboardingFailure(this.message);
 }
 
-class OnboardingSuccess extends OnboardingState {
-  const OnboardingSuccess({
+final class OnboardingSuccess extends OnboardingState {
+  final OnboardingModel model;
+  final String selectedGoalId;
+  final String selectedAvailability;
+
+  OnboardingSuccess({
     required this.model,
     required this.selectedGoalId,
     required this.selectedAvailability,
   });
-
-  final OnboardingModel model;
-  final String selectedGoalId;
-  final String selectedAvailability;
 
   OnboardingSuccess copyWith({
     OnboardingModel? model,
@@ -48,7 +35,4 @@ class OnboardingSuccess extends OnboardingState {
       selectedAvailability: selectedAvailability ?? this.selectedAvailability,
     );
   }
-
-  @override
-  List<Object?> get props => [model, selectedGoalId, selectedAvailability];
 }

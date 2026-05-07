@@ -1,19 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/services/user_selection_service.dart';
 import '../../data/models/onboarding_model.dart';
 import '../../data/repos/onboarding_repo.dart';
-import 'onboarding_state.dart';
+
+part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
-  OnboardingCubit(this._repo, this._selection)
-    : super(const OnboardingInitial());
+  OnboardingCubit(this._repo, this._selection) : super(OnboardingInitial());
 
   final OnboardingRepo _repo;
   final UserSelectionService _selection;
 
   Future<void> load() async {
-    emit(const OnboardingLoading());
+    emit(OnboardingLoading());
     try {
       final model = await _repo.getOnboardingData();
       final current = state;
@@ -34,7 +35,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         ),
       );
     } catch (_) {
-      emit(const OnboardingFailure('Unable to load onboarding data.'));
+      emit(OnboardingFailure('Unable to load onboarding data.'));
     }
   }
 
