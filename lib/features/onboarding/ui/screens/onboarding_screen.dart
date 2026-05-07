@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../logic/onboarding_cubit.dart';
-import '../logic/onboarding_state.dart';
 import 'widgets/onboarding_widgets.dart';
 
 class OnboardingScreen extends StatelessWidget {
