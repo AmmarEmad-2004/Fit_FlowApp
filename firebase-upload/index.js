@@ -3,22 +3,44 @@ const serviceAccount = require("./serviceAccountKey.json");
 const data = require("./workout.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 
 const db = admin.firestore();
 
-async function upload() {
-  const batch = db.batch();
+async function uploadPrograms() {
+  try {
+    for (const programType in data) {
 
-  Object.keys(data).forEach((key) => {
-    const ref = db.collection("programs").doc(key);
-    batch.set(ref, data[key]);
-  });
+      // muscle / strong / general
+      const programRef = db.collection("programs").doc(programType);
 
-  await batch.commit();
+      await programRef.set({
+        name: programType,
+      });
 
-  console.log("Uploaded successfully 🚀");
+      const daysData = data[programType];
+
+      for (const daysKey in daysData) {
+
+        // 2_days / 3_days / 4_days
+        const daysRef = programRef
+          .collection("plans")
+          .doc(daysKey);
+
+        await daysRef.set({
+          days: daysKey,
+          workouts: daysData[daysKey],
+        });
+
+        console.log(`Uploaded ${programType} -> ${daysKey}`);
+      }
+    }
+
+    console.log("🔥 All workout programs uploaded successfully!");
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-upload();
+uploadPrograms();
