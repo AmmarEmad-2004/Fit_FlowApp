@@ -1,22 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/workout_program_model.dart';
 import '../../data/repos/home_repo.dart';
-import 'home_state.dart';
+
+part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this._repo) : super(const HomeInitial());
+  HomeCubit(this._repo) : super(HomeInitial());
 
   final HomeRepo _repo;
 
   Future<void> load() async {
-    emit(const HomeLoading());
+    emit(HomeLoading());
     try {
       final program = await _repo.getProgram();
       emit(
         HomeSuccess(program: program, selectedDayIndex: 0, selectedTabIndex: 0),
       );
     } catch (_) {
-      emit(const HomeFailure('Unable to load your plan. Please try again.'));
+      emit(HomeFailure('Unable to load your plan. Please try again.'));
     }
   }
 

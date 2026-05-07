@@ -1,41 +1,28 @@
-import 'package:equatable/equatable.dart';
+part of 'home_cubit.dart';
 
-import '../../data/models/workout_program_model.dart';
+@immutable
+sealed class HomeState {}
 
-sealed class HomeState extends Equatable {
-  const HomeState();
+final class HomeInitial extends HomeState {}
 
-  @override
-  List<Object?> get props => [];
-}
+final class HomeLoading extends HomeState {}
 
-class HomeInitial extends HomeState {
-  const HomeInitial();
-}
-
-class HomeLoading extends HomeState {
-  const HomeLoading();
-}
-
-class HomeFailure extends HomeState {
-  const HomeFailure(this.message);
-
+final class HomeFailure extends HomeState {
   final String message;
 
-  @override
-  List<Object?> get props => [message];
+  HomeFailure(this.message);
 }
 
-class HomeSuccess extends HomeState {
-  const HomeSuccess({
+final class HomeSuccess extends HomeState {
+  final WorkoutProgramModel program;
+  final int selectedDayIndex;
+  final int selectedTabIndex;
+
+  HomeSuccess({
     required this.program,
     required this.selectedDayIndex,
     required this.selectedTabIndex,
   });
-
-  final WorkoutProgramModel program;
-  final int selectedDayIndex;
-  final int selectedTabIndex;
 
   HomeSuccess copyWith({
     WorkoutProgramModel? program,
@@ -48,7 +35,4 @@ class HomeSuccess extends HomeState {
       selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
     );
   }
-
-  @override
-  List<Object?> get props => [program, selectedDayIndex, selectedTabIndex];
 }
