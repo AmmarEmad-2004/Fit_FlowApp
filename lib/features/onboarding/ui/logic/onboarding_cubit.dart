@@ -7,54 +7,55 @@ import 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
   OnboardingCubit(this._repo, this._selection)
-    : super(OnboardingState.initial());
+    : super(const OnboardingInitial());
 
   final OnboardingRepo _repo;
   final UserSelectionService _selection;
 
   Future<void> load() async {
-    emit(state.copyWith(isLoading: true, clearError: true));
+    emit(const OnboardingLoading());
     try {
       final model = await _repo.getOnboardingData();
-      final goalId = _defaultGoalId(model, state.selectedGoalId);
+      final current = state;
+      final goalId = _defaultGoalId(
+        model,
+        current is OnboardingSuccess ? current.selectedGoalId : '',
+      );
       final availability = _defaultAvailability(
         model,
-        state.selectedAvailability,
+        current is OnboardingSuccess ? current.selectedAvailability : '',
       );
 
       emit(
-        state.copyWith(
-          isLoading: false,
+        OnboardingSuccess(
           model: model,
           selectedGoalId: goalId,
           selectedAvailability: availability,
-          clearError: true,
         ),
       );
     } catch (_) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'Unable to load onboarding data.',
-        ),
-      );
+      emit(const OnboardingFailure('Unable to load onboarding data.'));
     }
   }
 
   void selectGoal(String goalId) {
-    emit(state.copyWith(selectedGoalId: goalId));
+    final current = state;
+    if (current is! OnboardingSuccess) return;
+    emit(current.copyWith(selectedGoalId: goalId));
   }
 
   void selectAvailability(String availability) {
-    emit(state.copyWith(selectedAvailability: availability));
+    final current = state;
+    if (current is! OnboardingSuccess) return;
+    emit(current.copyWith(selectedAvailability: availability));
   }
 
   void persistSelection() {
-    final model = state.model;
-    if (model == null) return;
+    final current = state;
+    if (current is! OnboardingSuccess) return;
 
-    final goalId = state.selectedGoalId;
-    final availability = state.selectedAvailability;
+    final goalId = current.selectedGoalId;
+    final availability = current.selectedAvailability;
 
     final programType = _mapGoalToProgram(goalId);
     final daysPerWeek = _parseDays(availability);
