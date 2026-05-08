@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/exercise_model.dart';
+
 class ExerciseTile extends StatelessWidget {
-  final dynamic exercise;
+  final ExerciseModel exercise;
 
   const ExerciseTile({super.key, required this.exercise});
 
