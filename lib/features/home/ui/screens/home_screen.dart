@@ -84,10 +84,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    final labels = HomeUtils.dayLabels(state.program.trainingDays);
     final maxIndex = state.program.trainingDays.length - 1;
     final safeIndex = state.selectedDayIndex.clamp(0, maxIndex).toInt();
     final currentDay = state.program.trainingDays[safeIndex];
+    final activeCount = state.program.daysPerWeek.clamp(1, 5);
+    final weeklyBlueprint = HomeUtils.weeklyBlueprint(activeCount);
+    final weekdayLabels = HomeUtils.weekdayInitials();
+    final activeIndices = <int>[];
+    for (int i = 0; i < weeklyBlueprint.length; i++) {
+      if (weeklyBlueprint[i]) activeIndices.add(i);
+    }
+    final selectedWeekIndex = activeIndices.isEmpty
+        ? 0
+        : activeIndices[safeIndex.clamp(0, activeIndices.length - 1)];
     final plan = HomeUtils.planForDay(currentDay);
 
     return Column(
@@ -124,9 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // ── Training day selector ─────────────────────────────────
               WeekSelector(
-                labels: labels,
-                selectedIndex: safeIndex,
-                onSelect: cubit.selectDay,
+                labels: weekdayLabels,
+                selectedIndex: selectedWeekIndex,
+                activeDays: weeklyBlueprint,
+                onSelect: (weekIndex) {
+                  final trainingIndex = activeIndices.indexOf(weekIndex);
+                  if (trainingIndex != -1) {
+                    cubit.selectDay(trainingIndex);
+                  }
+                },
               ),
               const SizedBox(height: 14),
 
