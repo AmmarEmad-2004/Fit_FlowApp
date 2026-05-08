@@ -9,10 +9,9 @@ import 'package:fit_flow/core/di/service_locator.dart';
 import 'package:fit_flow/fit_flow_app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 void main() {
   testWidgets('App boots into onboarding', (WidgetTester tester) async {
-    setupDependencies();
+    setupGetIt();
     await tester.pumpWidget(const FitFlowApp());
     await tester.pump(const Duration(seconds: 3));
     await tester.pumpAndSettle();
