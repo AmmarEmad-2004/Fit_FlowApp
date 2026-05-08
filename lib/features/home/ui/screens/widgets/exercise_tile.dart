@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/models/exercise_model.dart';
-
 class ExerciseTile extends StatelessWidget {
-  final ExerciseModel exercise;
+  final Map<String, String> exercise;
 
   const ExerciseTile({super.key, required this.exercise});
 
@@ -36,12 +34,12 @@ class ExerciseTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  exercise.name,
+                  exercise['name'] ?? 'Unknown Exercise',
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  exercise.targetArea,
+                  exercise['targetArea'] ?? '—',
                   style: const TextStyle(
                     color: Color(0xFF9CA3AF),
                     fontSize: 12,
@@ -51,7 +49,7 @@ class ExerciseTile extends StatelessWidget {
             ),
           ),
           Text(
-            exercise.reps,
+            exercise['reps'] ?? '—',
             style: const TextStyle(
               color: Color(0xFF2F6CF6),
               fontWeight: FontWeight.w800,
