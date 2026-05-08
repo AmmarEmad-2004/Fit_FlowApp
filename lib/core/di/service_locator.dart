@@ -14,7 +14,7 @@ import '../router/app_router.dart';
 
 final GetIt getIt = GetIt.instance;
 
-Future<void> setupDependencies() async {
+Future<void> setupGetIt() async {
   final programService = await ProgramService.create();
   getIt.registerLazySingleton<ProgramService>(() => programService);
   getIt.registerLazySingleton<UserSelectionService>(UserSelectionService.new);
