@@ -35,7 +35,11 @@ class ProgramService {
         final cached = _box.get(key) as Map;
         final timestamp = DateTime.parse(cached['fetchedAt'] as String);
         if (DateTime.now().difference(timestamp) <= _ttl) {
-          return _deepCast(cached['data'] as Map);
+          final cachedData = _deepCast(cached['data'] as Map);
+          final normalized = _normalizeProgramData(cachedData);
+          if (_hasTrainingDays(normalized)) {
+            return normalized;
+          }
         }
       } catch (_) {
         // Cache is corrupt or old structure — delete and re-fetch
@@ -43,30 +47,47 @@ class ProgramService {
       }
     }
 
-    // Firestore structure: collection('programs').doc(programType).collection(daysPerWeek.toString()).docs
-    final docRef = _firestore
-        .collection('programs')
-        .doc(programType)
-        .collection(daysPerWeek.toString());
-    final snapshot = await docRef.get();
-
     final Map<String, dynamic> programData = {
       'programType': programType,
       'daysPerWeek': daysPerWeek,
-      'days': {},
+      'days': <String, dynamic>{},
     };
 
-    for (final doc in snapshot.docs) {
-      programData['days'][doc.id] = doc.data();
+    // Preferred Firestore structure (current uploader):
+    // programs/{programType}/plans/{daysPerWeek}_days { workouts: [...] }
+    final plansDoc = await _firestore
+        .collection('programs')
+        .doc(programType)
+        .collection('plans')
+        .doc('${daysPerWeek}_days')
+        .get();
+
+    if (plansDoc.exists) {
+      final data = plansDoc.data() ?? <String, dynamic>{};
+      final workouts = data['workouts'];
+      programData['days'] = _normalizeWorkoutsToDays(workouts);
+    } else {
+      // Legacy structure: programs/{programType}/{daysPerWeek}/day_* docs
+      final docRef = _firestore
+          .collection('programs')
+          .doc(programType)
+          .collection(daysPerWeek.toString());
+      final snapshot = await docRef.get();
+
+      for (final doc in snapshot.docs) {
+        programData['days'][doc.id] = doc.data();
+      }
     }
+
+    final normalized = _normalizeProgramData(programData);
 
     // Save to Hive
     _box.put(key, {
       'fetchedAt': DateTime.now().toIso8601String(),
-      'data': programData,
+      'data': normalized,
     });
 
-    return programData;
+    return normalized;
   }
 
   /// Try to load from cache; if missing, fetch from Firestore.
@@ -77,7 +98,8 @@ class ProgramService {
     final key = _cacheKey(programType, daysPerWeek);
     if (!_box.containsKey(key)) return null;
     final cached = _box.get(key) as Map;
-    return Map<String, dynamic>.from(cached['data'] as Map);
+    final raw = Map<String, dynamic>.from(cached['data'] as Map);
+    return _normalizeProgramData(raw);
   }
 
   /// Force refresh and return latest.
@@ -130,8 +152,9 @@ class ProgramService {
   /// Required because Hive deserialises nested maps as `Map<dynamic, dynamic>`.
   Map<String, dynamic> _deepCast(Map raw) {
     return raw.map((k, v) {
-      final value =
-          v is Map ? _deepCast(v) : (v is List ? _deepCastList(v) : v);
+      final value = v is Map
+          ? _deepCast(v)
+          : (v is List ? _deepCastList(v) : v);
       return MapEntry(k.toString(), value);
     });
   }
@@ -139,5 +162,82 @@ class ProgramService {
   List<dynamic> _deepCastList(List raw) {
     return raw.map((e) => e is Map ? _deepCast(e) : e).toList();
   }
-}
 
+  // ── Normalization helpers ─────────────────────────────────────────────────-
+
+  Map<String, dynamic> _normalizeProgramData(Map<String, dynamic> raw) {
+    final days = raw['days'];
+    if (days is Map) {
+      final normalizedDays = <String, dynamic>{};
+      days.forEach((key, value) {
+        if (value is Map) {
+          normalizedDays[key.toString()] = _normalizeDay(value);
+        }
+      });
+      return {...raw, 'days': normalizedDays};
+    }
+
+    if (raw['workouts'] is List) {
+      return {
+        'programType': raw['programType'] ?? '',
+        'daysPerWeek': raw['daysPerWeek'] ?? (raw['workouts'] as List).length,
+        'days': _normalizeWorkoutsToDays(raw['workouts']),
+      };
+    }
+
+    return raw;
+  }
+
+  bool _hasTrainingDays(Map<String, dynamic> data) {
+    final days = data['days'];
+    return days is Map && days.isNotEmpty;
+  }
+
+  Map<String, dynamic> _normalizeWorkoutsToDays(dynamic workouts) {
+    final daysMap = <String, dynamic>{};
+    final list = workouts is List ? workouts : <dynamic>[];
+
+    for (int i = 0; i < list.length; i++) {
+      final rawDay = list[i];
+      if (rawDay is Map) {
+        daysMap['day_$i'] = _normalizeDay(rawDay);
+      }
+    }
+
+    return daysMap;
+  }
+
+  Map<String, dynamic> _normalizeDay(Map rawDay) {
+    final exercisesRaw = rawDay['exercises'];
+    final List<Map<String, dynamic>> exercises;
+
+    if (exercisesRaw is Map) {
+      exercises = exercisesRaw.values
+          .whereType<Map>()
+          .map(_normalizeExercise)
+          .toList();
+    } else if (exercisesRaw is List) {
+      exercises = exercisesRaw
+          .whereType<Map>()
+          .map(_normalizeExercise)
+          .toList();
+    } else {
+      exercises = <Map<String, dynamic>>[];
+    }
+
+    return {
+      'day': rawDay['day'] ?? 'Training Day',
+      'time': (rawDay['time'] as num?)?.toInt() ?? 45,
+      'exercises': exercises,
+    };
+  }
+
+  Map<String, dynamic> _normalizeExercise(Map raw) {
+    return {
+      'name': raw['name'] ?? 'Unknown Exercise',
+      'targetArea':
+          raw['targetArea'] ?? raw['desc'] ?? raw['description'] ?? '—',
+      'reps': raw['reps'] ?? '—',
+    };
+  }
+}
