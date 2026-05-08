@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/workout_plan_model.dart';
+
 typedef StartCallback = void Function();
 
 class PlanCard extends StatelessWidget {
-  final dynamic plan;
+  final WorkoutPlanModel plan;
   final StartCallback onStart;
 
   const PlanCard({super.key, required this.plan, required this.onStart});
