@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/user_selection_service.dart';
 import '../../data/models/onboarding_model.dart';
 import '../../data/repos/onboarding_repo.dart';
 
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
-  OnboardingCubit(this._repo, this._selection) : super(OnboardingInitial());
+  OnboardingCubit(this._repo) : super(OnboardingInitial());
 
   final OnboardingRepo _repo;
-  final UserSelectionService _selection;
 
   Future<void> load() async {
     emit(OnboardingLoading());
@@ -67,16 +65,9 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     final current = state;
     if (current is! OnboardingSuccess) return;
 
-    final goalId = current.selectedGoalId;
-    final availability = current.selectedAvailability;
-
-    final programType = _mapGoalToProgram(goalId);
-    final daysPerWeek = _parseDays(availability);
-
-    _selection.setProgramSelection(
-      programType: programType,
-      daysPerWeek: daysPerWeek,
-      goal: goalId,
+    _repo.persistSelection(
+      goalId: current.selectedGoalId,
+      availability: current.selectedAvailability,
     );
   }
 
@@ -93,25 +84,5 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     return model.availabilityOptions.isNotEmpty
         ? model.availabilityOptions.first
         : '3 Days';
-  }
-
-  String _mapGoalToProgram(String goalId) {
-    switch (goalId) {
-      case 'build_muscle':
-        return 'muscle';
-      case 'get_strong':
-        return 'strong';
-      case 'general_fitness':
-        return 'general';
-      default:
-        return 'muscle';
-    }
-  }
-
-  int _parseDays(String availability) {
-    final match = RegExp(r'\d+').firstMatch(availability);
-    if (match == null) return 3;
-    final value = int.tryParse(match.group(0) ?? '3') ?? 3;
-    return value < 2 ? 2 : value;
   }
 }
