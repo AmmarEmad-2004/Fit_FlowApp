@@ -24,7 +24,8 @@ class TrainingDayModel {
         final ex = e as Map<String, dynamic>;
         return ExerciseModel(
           name: ex['name'] as String? ?? 'Unknown Exercise',
-          targetArea: ex['targetArea'] as String? ?? '—',
+          targetArea:
+              ex['targetArea'] as String? ?? ex['desc'] as String? ?? '—',
           reps: ex['reps'] as String? ?? '—',
         );
       }).toList(),
