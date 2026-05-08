@@ -18,8 +18,8 @@ class HomeCubit extends Cubit<HomeState> {
       emit(
         HomeSuccess(program: program, selectedDayIndex: 0, selectedTabIndex: 0),
       );
-    } catch (_) {
-      emit(HomeFailure('Unable to load your plan. Please try again.'));
+    } catch (e) {
+      emit(HomeFailure(e.toString()));
     }
   }
 
@@ -31,13 +31,25 @@ class HomeCubit extends Cubit<HomeState> {
     if (maxIndex < 0) return;
     final clamped = index.clamp(0, maxIndex);
 
-    emit(current.copyWith(selectedDayIndex: clamped));
+    emit(
+      HomeSuccess(
+        program: current.program,
+        selectedDayIndex: clamped,
+        selectedTabIndex: current.selectedTabIndex,
+      ),
+    );
   }
 
   void selectTab(int index) {
     final current = state;
     if (current is! HomeSuccess) return;
 
-    emit(current.copyWith(selectedTabIndex: index));
+    emit(
+      HomeSuccess(
+        program: current.program,
+        selectedDayIndex: current.selectedDayIndex,
+        selectedTabIndex: index,
+      ),
+    );
   }
 }

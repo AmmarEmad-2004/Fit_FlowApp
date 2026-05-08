@@ -23,16 +23,4 @@ final class HomeSuccess extends HomeState {
     required this.selectedDayIndex,
     required this.selectedTabIndex,
   });
-
-  HomeSuccess copyWith({
-    WorkoutProgramModel? program,
-    int? selectedDayIndex,
-    int? selectedTabIndex,
-  }) {
-    return HomeSuccess(
-      program: program ?? this.program,
-      selectedDayIndex: selectedDayIndex ?? this.selectedDayIndex,
-      selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
-    );
-  }
 }
