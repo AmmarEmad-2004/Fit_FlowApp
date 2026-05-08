@@ -42,13 +42,25 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   void selectGoal(String goalId) {
     final current = state;
     if (current is! OnboardingSuccess) return;
-    emit(current.copyWith(selectedGoalId: goalId));
+    emit(
+      OnboardingSuccess(
+        model: current.model,
+        selectedGoalId: goalId,
+        selectedAvailability: current.selectedAvailability,
+      ),
+    );
   }
 
   void selectAvailability(String availability) {
     final current = state;
     if (current is! OnboardingSuccess) return;
-    emit(current.copyWith(selectedAvailability: availability));
+    emit(
+      OnboardingSuccess(
+        model: current.model,
+        selectedGoalId: current.selectedGoalId,
+        selectedAvailability: availability,
+      ),
+    );
   }
 
   void persistSelection() {
@@ -75,6 +87,9 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   String _defaultAvailability(OnboardingModel model, String current) {
     if (current.isNotEmpty) return current;
+    if (model.availabilityOptions.contains('3 Days')) {
+      return '3 Days';
+    }
     return model.availabilityOptions.isNotEmpty
         ? model.availabilityOptions.first
         : '3 Days';
