@@ -5,12 +5,14 @@ class WeekSelector extends StatelessWidget {
     super.key,
     required this.labels,
     required this.selectedIndex,
+    required this.activeDays,
     required this.onSelect,
   });
 
-  /// Short labels for each training day (e.g. ["PUS", "PUL", "LEG"])
+  /// Short labels for each weekday (e.g. ["M", "T", "W", "T", "F", "S", "S"])
   final List<String> labels;
   final int selectedIndex;
+  final List<bool> activeDays;
   final void Function(int index) onSelect;
 
   @override
@@ -23,31 +25,39 @@ class WeekSelector extends StatelessWidget {
       ),
       child: Row(
         children: List.generate(labels.length, (i) {
+          final isActive = i < activeDays.length && activeDays[i];
           final isSelected = selectedIndex == i;
+
+          final bgColor = isSelected
+              ? const Color(0xFF2F6CF6)
+              : (isActive ? const Color(0xFFE7EEFF) : const Color(0xFFF3F4F6));
+          final textColor = isSelected ? Colors.white : const Color(0xFF6B7280);
+
           return Expanded(
             child: GestureDetector(
-              onTap: () => onSelect(i),
+              onTap: isActive ? () => onSelect(i) : null,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
                 margin: const EdgeInsets.symmetric(horizontal: 4),
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? const Color(0xFF2F6CF6)
-                      : const Color(0xFFF3F4F6),
+                  color: bgColor,
                   borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isSelected
+                        ? const Color(0xFF2F6CF6)
+                        : Colors.transparent,
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   labels[i],
                   style: TextStyle(
-                    color: isSelected
-                        ? Colors.white
-                        : const Color(0xFF9CA3AF),
+                    color: textColor,
                     fontWeight: FontWeight.w700,
-                    fontSize: 11,
-                    letterSpacing: 0.5,
+                    fontSize: 12,
+                    letterSpacing: 0.6,
                   ),
                 ),
               ),
