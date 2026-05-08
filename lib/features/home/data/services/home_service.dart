@@ -21,7 +21,7 @@ class HomeService {
     );
 
     final days = programData['days'] as Map<String, dynamic>? ?? {};
-    final dayIds = days.keys.toList()..sort(); // day_0, day_1, …
+    final dayIds = days.keys.toList()..sort();
 
     final trainingDays = dayIds.map((id) {
       final raw = days[id] as Map<String, dynamic>? ?? {};
