@@ -1,5 +1,3 @@
-import 'exercise_model.dart';
-
 class TrainingDayModel {
   const TrainingDayModel({
     required this.day,
@@ -13,7 +11,7 @@ class TrainingDayModel {
   /// Total session duration in minutes
   final int time;
 
-  final List<ExerciseModel> exercises;
+  final List<Map<String, String>> exercises;
 
   factory TrainingDayModel.fromMap(Map<String, dynamic> map) {
     final exercisesList = map['exercises'] as List<dynamic>? ?? [];
@@ -22,12 +20,12 @@ class TrainingDayModel {
       time: (map['time'] as num?)?.toInt() ?? 45,
       exercises: exercisesList.map((e) {
         final ex = e as Map<String, dynamic>;
-        return ExerciseModel(
-          name: ex['name'] as String? ?? 'Unknown Exercise',
-          targetArea:
+        return {
+          'name': ex['name'] as String? ?? 'Unknown Exercise',
+          'targetArea':
               ex['targetArea'] as String? ?? ex['desc'] as String? ?? '—',
-          reps: ex['reps'] as String? ?? '—',
-        );
+          'reps': ex['reps'] as String? ?? '—',
+        };
       }).toList(),
     );
   }
