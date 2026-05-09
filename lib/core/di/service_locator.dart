@@ -21,11 +21,13 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<OnboardingService>(OnboardingService.new);
   getIt.registerLazySingleton<OnboardingRepo>(
-    () => OnboardingRepoImpl(getIt<OnboardingService>()),
+    () => OnboardingRepoImpl(
+      getIt<OnboardingService>(),
+      getIt<UserSelectionService>(),
+    ),
   );
   getIt.registerFactory<OnboardingCubit>(
-    () =>
-        OnboardingCubit(getIt<OnboardingRepo>(), getIt<UserSelectionService>()),
+    () => OnboardingCubit(getIt<OnboardingRepo>()),
   );
 
   getIt.registerLazySingleton<HomeService>(
