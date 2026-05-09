@@ -59,13 +59,13 @@ class AppRobot {
 
     getIt.registerLazySingleton<OnboardingService>(OnboardingService.new);
     getIt.registerLazySingleton<OnboardingRepo>(
-      () => OnboardingRepoImpl(getIt<OnboardingService>()),
-    );
-    getIt.registerFactory<OnboardingCubit>(
-      () => OnboardingCubit(
-        getIt<OnboardingRepo>(),
+      () => OnboardingRepoImpl(
+        getIt<OnboardingService>(),
         getIt<UserSelectionService>(),
       ),
+    );
+    getIt.registerFactory<OnboardingCubit>(
+      () => OnboardingCubit(getIt<OnboardingRepo>()),
     );
 
     getIt.registerLazySingleton<HomeService>(
