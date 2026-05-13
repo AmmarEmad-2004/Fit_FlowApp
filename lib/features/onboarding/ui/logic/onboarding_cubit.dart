@@ -61,11 +61,12 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     );
   }
 
-  void persistSelection() {
+  /// Saves the selection to Hive and returns when done.
+  Future<void> persistSelection() async {
     final current = state;
     if (current is! OnboardingSuccess) return;
 
-    _repo.persistSelection(
+    await _repo.persistSelection(
       goalId: current.selectedGoalId,
       availability: current.selectedAvailability,
     );
