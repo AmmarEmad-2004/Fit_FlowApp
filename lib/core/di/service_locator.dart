@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../core/services/program_service.dart';
 import '../../core/services/user_selection_service.dart';
@@ -15,10 +16,18 @@ import '../router/app_router.dart';
 final GetIt getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
+  // ── Core services ──────────────────────────────────────────────────────
+  // ProgramService.create() already calls Hive.initFlutter().
   final programService = await ProgramService.create();
   getIt.registerLazySingleton<ProgramService>(() => programService);
-  getIt.registerLazySingleton<UserSelectionService>(UserSelectionService.new);
 
+  // Open the user-selection box (Hive is already initialised above).
+  final userBox = await Hive.openBox(UserSelectionService.boxName);
+  getIt.registerLazySingleton<UserSelectionService>(
+    () => UserSelectionService(userBox),
+  );
+
+  // ── Onboarding ─────────────────────────────────────────────────────────
   getIt.registerLazySingleton<OnboardingService>(OnboardingService.new);
   getIt.registerLazySingleton<OnboardingRepo>(
     () => OnboardingRepoImpl(
@@ -30,6 +39,7 @@ Future<void> setupGetIt() async {
     () => OnboardingCubit(getIt<OnboardingRepo>()),
   );
 
+  // ── Home ───────────────────────────────────────────────────────────────
   getIt.registerLazySingleton<HomeService>(
     () => HomeService(getIt<ProgramService>(), getIt<UserSelectionService>()),
   );
@@ -38,5 +48,6 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepo>()));
 
+  // ── Router ─────────────────────────────────────────────────────────────
   getIt.registerLazySingleton<AppRouter>(AppRouter.new);
 }
