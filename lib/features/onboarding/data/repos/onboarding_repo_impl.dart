@@ -15,31 +15,26 @@ class OnboardingRepoImpl implements OnboardingRepo {
   }
 
   @override
-  void persistSelection({
+  Future<void> persistSelection({
     required String goalId,
     required String availability,
-  }) {
+  }) async {
     final programType = _mapGoalToProgram(goalId);
     final daysPerWeek = _parseDays(availability);
 
-    _selection.setProgramSelection(
+    await _selection.save(
       programType: programType,
       daysPerWeek: daysPerWeek,
-      goal: goalId,
     );
   }
 
   String _mapGoalToProgram(String goalId) {
-    switch (goalId) {
-      case 'build_muscle':
-        return 'muscle';
-      case 'get_strong':
-        return 'strong';
-      case 'general_fitness':
-        return 'general';
-      default:
-        return 'muscle';
-    }
+    return switch (goalId) {
+      'build_muscle'    => 'muscle',
+      'get_strong'      => 'strong',
+      'general_fitness' => 'general',
+      _                 => 'muscle',
+    };
   }
 
   int _parseDays(String availability) {
