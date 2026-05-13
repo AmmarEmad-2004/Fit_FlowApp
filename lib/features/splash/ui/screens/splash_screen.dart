@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/di/service_locator.dart';
-import '../../../../core/services/user_selection_service.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -17,20 +14,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigate();
-  }
-
-  Future<void> _navigate() async {
-    // Show splash for at least 2 seconds.
-    await Future.delayed(const Duration(seconds: 2));
-    if (!mounted) return;
-
-    final selection = getIt<UserSelectionService>();
-    if (selection.hasSelection) {
-      context.go('/home');
-    } else {
-      context.go('/onboarding');
-    }
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        context.go('/onboarding');
+      }
+    });
   }
 
   @override
