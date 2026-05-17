@@ -1,0 +1,59 @@
+# Duo Code Architecture & AI Agent Rules
+
+These rules dictate the structural and architectural guidelines for developing the Duo Code Flutter application. When adding new features or modifying existing code, adhere strictly to these patterns which are based on the `auth` and `profile` features.
+
+## 1. Feature-First Architecture
+The project follows a modular, feature-based folder structure inside `lib/features/`.
+Every new feature must follow this internal structure:
+```text
+lib/features/<feature_name>/
+├── data/
+│   ├── models/       # Data classes with fromJson/toJson
+│   ├── repos/        # Abstract repo interfaces and their implementations
+│   └── services/     # API/Networking layer (using Dio)
+└── presentation/ (or ui/)
+    ├── logic/        # State Management (Cubits and States)
+    ├── screens/      # Main UI Views
+    └── widgets/      # Reusable UI components specific to the feature
+```
+
+## 2. State Management (Cubit)
+- **Library**: `flutter_bloc` using `Cubit`.
+- **Location**: `presentation/logic/<cubit_name>/`.
+- **Pattern**: 
+  - Define a base State and specific states (e.g., `Initial`, `Loading`, `Success`, `Failure`).
+  - The Cubit should hold the Repository as a dependency.
+  - The Cubit calls the repository, handles the `Either` result, and emits the corresponding states.
+  - Avoid putting heavy business logic directly in the UI.
+
+## 3. Data Layer & Networking
+- **Services (`services/`)**: 
+  - Use `Dio` for network requests.
+  - Services should only handle the API requests/responses. Example methods: `login(...)`, `getMe()`.
+  - Extract the raw data from `Response` and return it to the repository.
+- **Repositories (`repos/`)**:
+  - Always create an abstract interface `FeatureRepo` and an implementation `FeatureRepoImpl`.
+  - The Repository maps the Service's raw response to the Data Models.
+  - **Crucial**: Use `dartz` package for functional error handling. Return `Future<Either<Failure, Model>>`.
+  - Use `ErrorHandler.handle(e)` to map exceptions into `Failure` objects (e.g., `AuthFailure`).
+- **Models (`models/`)**:
+  - Use simple Dart classes.
+  - Implement manual `fromJson` and `toJson` factory constructors (no `json_serializable` unless specified).
+  - Map specific fields correctly to the API JSON structure.
+
+## 4. Dependency Injection
+- Use `getIt` for dependency injection.
+- Defined and initialized in `lib/core/utils/service_locator.dart`.
+- Inject repositories into Cubits.
+- Use `getIt<CubitName>()` when one Cubit needs to interact with another (e.g., updating user state in `UserCubit` after modifying profile in `ProfileCubit`).
+
+## 5. Error Handling
+- Use the `dartz` package's `Either` type across all Repositories.
+- Left side should always be a Failure (e.g., `AuthFailure` from `lib/core/failuers/`).
+- Right side should be the successful Model or `Unit` (if void).
+- Use `result.fold((failure) => ..., (success) => ...)` in Cubits to emit the corresponding UI states.
+
+## 6. General Coding Practices
+- Use descriptive naming for classes and files (`feature_repo.dart`, `feature_repo_impl.dart`, `feature_cubit.dart`).
+- When navigating or accessing global state, ensure it is decoupled from the pure business logic where possible.
+- Adhere to separation of concerns: UI knows about Cubit, Cubit knows about Repo, Repo knows about Service and Models.
