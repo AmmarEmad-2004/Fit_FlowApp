@@ -1,7 +1,3 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/failures/error_handler.dart';
-import '../../../../core/failures/failure.dart';
 import '../models/onboarding_model.dart';
 import '../services/onboarding_service.dart';
 import '../../../../core/services/user_selection_service.dart';
@@ -14,33 +10,23 @@ class OnboardingRepoImpl implements OnboardingRepo {
   final UserSelectionService _selection;
 
   @override
-  Future<Either<Failure, OnboardingModel>> getOnboardingData() async {
-    try {
-      final model = await _service.loadOnboardingData();
-      return Right(model);
-    } catch (e) {
-      return Left(ErrorHandler.handle(e));
-    }
+  Future<OnboardingModel> getOnboardingData() {
+    return _service.loadOnboardingData();
   }
 
   @override
-  Either<Failure, Unit> persistSelection({
+  void persistSelection({
     required String goalId,
     required String availability,
   }) {
-    try {
-      final programType = _mapGoalToProgram(goalId);
-      final daysPerWeek = _parseDays(availability);
+    final programType = _mapGoalToProgram(goalId);
+    final daysPerWeek = _parseDays(availability);
 
-      _selection.setProgramSelection(
-        programType: programType,
-        daysPerWeek: daysPerWeek,
-        goal: goalId,
-      );
-      return const Right(unit);
-    } catch (e) {
-      return Left(ErrorHandler.handle(e));
-    }
+    _selection.setProgramSelection(
+      programType: programType,
+      daysPerWeek: daysPerWeek,
+      goal: goalId,
+    );
   }
 
   String _mapGoalToProgram(String goalId) {
