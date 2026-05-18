@@ -1,13 +1,13 @@
 part of 'onboarding_cubit.dart';
 
 @immutable
-sealed class OnboardingState {}
+sealed class PlansState {}
 
-final class OnboardingInitial extends OnboardingState {}
+final class OnboardingInitial extends PlansState {}
 
-final class OnboardingLoading extends OnboardingState {}
+final class OnboardingLoading extends PlansState {}
 
-final class OnboardingSuccess extends OnboardingState {
+final class OnboardingSuccess extends PlansState {
   final OnboardingModel model;
   final String selectedGoalId;
   final String selectedAvailability;
@@ -19,7 +19,7 @@ final class OnboardingSuccess extends OnboardingState {
   });
 }
 
-final class OnboardingFailure extends OnboardingState {
+final class OnboardingFailure extends PlansState {
   final String message;
 
   OnboardingFailure(this.message);
