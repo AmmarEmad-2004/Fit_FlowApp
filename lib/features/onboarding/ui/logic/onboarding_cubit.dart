@@ -7,7 +7,7 @@ import '../../data/repos/onboarding_repo.dart';
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<PlansState> {
-  OnboardingCubit(this._repo) : super(OnboardingInitial());
+  OnboardingCubit(this._repo) : super(PlansInitial());
 
   final OnboardingRepo _repo;
 
