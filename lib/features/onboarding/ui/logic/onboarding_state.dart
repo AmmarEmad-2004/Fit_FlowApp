@@ -12,7 +12,7 @@ final class PlansSuccess extends PlansState {
   final String selectedGoalId;
   final String selectedAvailability;
 
-  OnboardingSuccess({
+  PlansSuccess({
     required this.model,
     required this.selectedGoalId,
     required this.selectedAvailability,
