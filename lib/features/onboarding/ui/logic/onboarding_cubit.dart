@@ -7,27 +7,27 @@ import '../../data/repos/onboarding_repo.dart';
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<PlansState> {
-  OnboardingCubit(this._repo) : super(PlansInitial());
+  OnboardingCubit(this._repo) : super(OnboardingInitial());
 
   final OnboardingRepo _repo;
 
   Future<void> load() async {
-    emit(PlansLoading());
+    emit(OnboardingLoading());
     final result = await _repo.getOnboardingData();
 
-    result.fold((failure) => emit(PlansFailure(failure.message)), (model) {
+    result.fold((failure) => emit(OnboardingFailure(failure.message)), (model) {
       final current = state;
       final goalId = _defaultGoalId(
         model,
-        current is PlansSuccess ? current.selectedGoalId : '',
+        current is OnboardingSuccess ? current.selectedGoalId : '',
       );
       final availability = _defaultAvailability(
         model,
-        current is PlansSuccess ? current.selectedAvailability : '',
+        current is OnboardingSuccess ? current.selectedAvailability : '',
       );
 
       emit(
-        PlansSuccess(
+        OnboardingSuccess(
           model: model,
           selectedGoalId: goalId,
           selectedAvailability: availability,
@@ -38,9 +38,9 @@ class OnboardingCubit extends Cubit<PlansState> {
 
   void selectGoal(String goalId) {
     final current = state;
-    if (current is! PlansSuccess) return;
+    if (current is! OnboardingSuccess) return;
     emit(
-      PlansSuccess(
+      OnboardingSuccess(
         model: current.model,
         selectedGoalId: goalId,
         selectedAvailability: current.selectedAvailability,
@@ -50,9 +50,9 @@ class OnboardingCubit extends Cubit<PlansState> {
 
   void selectAvailability(String availability) {
     final current = state;
-    if (current is! PlansSuccess) return;
+    if (current is! OnboardingSuccess) return;
     emit(
-      PlansSuccess(
+      OnboardingSuccess(
         model: current.model,
         selectedGoalId: current.selectedGoalId,
         selectedAvailability: availability,
@@ -62,14 +62,14 @@ class OnboardingCubit extends Cubit<PlansState> {
 
   void persistSelection() {
     final current = state;
-    if (current is! PlansSuccess) return;
+    if (current is! OnboardingSuccess) return;
 
     final result = _repo.persistSelection(
       goalId: current.selectedGoalId,
       availability: current.selectedAvailability,
     );
 
-    result.fold((failure) => emit(PlansFailure(failure.message)), (_) {});
+    result.fold((failure) => emit(OnboardingFailure(failure.message)), (_) {});
   }
 
   String _defaultGoalId(OnboardingModel model, String current) {
