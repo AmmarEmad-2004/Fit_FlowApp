@@ -19,8 +19,8 @@ final class PlansSuccess extends PlansState {
   });
 }
 
-final class OnboardingFailure extends PlansState {
+final class PlansFailure extends PlansState {
   final String message;
 
-  OnboardingFailure(this.message);
+  PlansFailure(this.message);
 }
