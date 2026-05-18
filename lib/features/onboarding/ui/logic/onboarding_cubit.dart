@@ -6,7 +6,7 @@ import '../../data/repos/onboarding_repo.dart';
 
 part 'onboarding_state.dart';
 
-class OnboardingCubit extends Cubit<OnboardingState> {
+class OnboardingCubit extends Cubit<PlansState> {
   OnboardingCubit(this._repo) : super(OnboardingInitial());
 
   final OnboardingRepo _repo;
@@ -15,28 +15,25 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     emit(OnboardingLoading());
     final result = await _repo.getOnboardingData();
 
-    result.fold(
-      (failure) => emit(OnboardingFailure(failure.message)),
-      (model) {
-        final current = state;
-        final goalId = _defaultGoalId(
-          model,
-          current is OnboardingSuccess ? current.selectedGoalId : '',
-        );
-        final availability = _defaultAvailability(
-          model,
-          current is OnboardingSuccess ? current.selectedAvailability : '',
-        );
+    result.fold((failure) => emit(OnboardingFailure(failure.message)), (model) {
+      final current = state;
+      final goalId = _defaultGoalId(
+        model,
+        current is OnboardingSuccess ? current.selectedGoalId : '',
+      );
+      final availability = _defaultAvailability(
+        model,
+        current is OnboardingSuccess ? current.selectedAvailability : '',
+      );
 
-        emit(
-          OnboardingSuccess(
-            model: model,
-            selectedGoalId: goalId,
-            selectedAvailability: availability,
-          ),
-        );
-      },
-    );
+      emit(
+        OnboardingSuccess(
+          model: model,
+          selectedGoalId: goalId,
+          selectedAvailability: availability,
+        ),
+      );
+    });
   }
 
   void selectGoal(String goalId) {
@@ -72,10 +69,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       availability: current.selectedAvailability,
     );
 
-    result.fold(
-      (failure) => emit(OnboardingFailure(failure.message)),
-      (_) {},
-    );
+    result.fold((failure) => emit(OnboardingFailure(failure.message)), (_) {});
   }
 
   String _defaultGoalId(OnboardingModel model, String current) {
