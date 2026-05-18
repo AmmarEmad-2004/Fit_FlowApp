@@ -13,28 +13,30 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   Future<void> load() async {
     emit(OnboardingLoading());
-    try {
-      final model = await _repo.getOnboardingData();
-      final current = state;
-      final goalId = _defaultGoalId(
-        model,
-        current is OnboardingSuccess ? current.selectedGoalId : '',
-      );
-      final availability = _defaultAvailability(
-        model,
-        current is OnboardingSuccess ? current.selectedAvailability : '',
-      );
+    final result = await _repo.getOnboardingData();
 
-      emit(
-        OnboardingSuccess(
-          model: model,
-          selectedGoalId: goalId,
-          selectedAvailability: availability,
-        ),
-      );
-    } catch (_) {
-      emit(OnboardingFailure('Unable to load onboarding data.'));
-    }
+    result.fold(
+      (failure) => emit(OnboardingFailure(failure.message)),
+      (model) {
+        final current = state;
+        final goalId = _defaultGoalId(
+          model,
+          current is OnboardingSuccess ? current.selectedGoalId : '',
+        );
+        final availability = _defaultAvailability(
+          model,
+          current is OnboardingSuccess ? current.selectedAvailability : '',
+        );
+
+        emit(
+          OnboardingSuccess(
+            model: model,
+            selectedGoalId: goalId,
+            selectedAvailability: availability,
+          ),
+        );
+      },
+    );
   }
 
   void selectGoal(String goalId) {
@@ -65,9 +67,14 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     final current = state;
     if (current is! OnboardingSuccess) return;
 
-    _repo.persistSelection(
+    final result = _repo.persistSelection(
       goalId: current.selectedGoalId,
       availability: current.selectedAvailability,
+    );
+
+    result.fold(
+      (failure) => emit(OnboardingFailure(failure.message)),
+      (_) {},
     );
   }
 
