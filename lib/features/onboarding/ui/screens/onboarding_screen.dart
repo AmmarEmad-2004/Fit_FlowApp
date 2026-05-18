@@ -16,13 +16,13 @@ class OnboardingScreen extends StatelessWidget {
         bottom: false,
         child: BlocBuilder<OnboardingCubit, PlansState>(
           builder: (context, state) => switch (state) {
-            OnboardingInitial() || OnboardingLoading() => const Center(
+            PlansInitial() || PlansLoading() => const Center(
               child: CircularProgressIndicator(),
             ),
-            OnboardingFailure(:final message) => Center(
+            PlansFailure(:final message) => Center(
               child: FailureMassage(message: message),
             ),
-            OnboardingSuccess(
+            PlansSuccess(
               :final model,
               :final selectedGoalId,
               :final selectedAvailability,
