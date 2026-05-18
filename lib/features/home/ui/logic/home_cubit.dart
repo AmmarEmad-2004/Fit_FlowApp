@@ -13,14 +13,13 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> load() async {
     emit(HomeLoading());
-    try {
-      final program = await _repo.getProgram();
-      emit(
+    final result = await _repo.getProgram();
+    result.fold(
+      (failure) => emit(HomeFailure(failure.message)),
+      (program) => emit(
         HomeSuccess(program: program, selectedDayIndex: 0, selectedTabIndex: 0),
-      );
-    } catch (e) {
-      emit(HomeFailure(e.toString()));
-    }
+      ),
+    );
   }
 
   void selectDay(int index) {
