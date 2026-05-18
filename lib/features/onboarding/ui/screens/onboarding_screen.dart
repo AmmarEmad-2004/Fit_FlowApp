@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: BlocBuilder<OnboardingCubit, OnboardingState>(
+        child: BlocBuilder<OnboardingCubit, PlansState>(
           builder: (context, state) => switch (state) {
             OnboardingInitial() || OnboardingLoading() => const Center(
               child: CircularProgressIndicator(),
